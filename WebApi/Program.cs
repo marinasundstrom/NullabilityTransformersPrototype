@@ -11,20 +11,17 @@ builder.Services.AddControllers();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddSwaggerDocument(settings => settings.SchemaSettings.SchemaType = NJsonSchema.SchemaType.OpenApi3);
+//builder.Services.AddSwaggerDocument(settings => settings.SchemaSettings.SchemaType = NJsonSchema.SchemaType.OpenApi3);
 
-/*
 builder.Services.AddOpenApi(options =>
             {
-                // options.ApplyServersTransformer();
-                // options.ApplyOperationId();
-                // options.ApplyNullabilityTransformer();
-                // options.ApplyDescriptionTransformer();
-                // options.ApplySchemaNameTransforms(TypeExtensions.GetSchemaName);
-                // options.ApplySchemasNotDistinctByNullability();
+                options.ApplyServersTransformer();
+                options.ApplyOperationId();
+                options.ApplyNullabilityTransformer();
+                options.ApplyDescriptionTransformer();
+                options.ApplySchemaNameTransforms(TypeExtensions.GetSchemaName);
                 // options.ApplyInheritanceTransformer();
             });
-*/
 
 var app = builder.Build();
 
@@ -32,10 +29,10 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-////app.MapOpenApi();
-//app.MapOpenApiYaml();
+//app.MapOpenApi();
+app.MapOpenApiYaml();
 
-app.UseOpenApi(x => x.Path = "/openapi/{documentName}.yaml");
+//app.UseOpenApi(x => x.Path = "/openapi/{documentName}.yaml");
 
 if (app.Environment.IsDevelopment())
 {

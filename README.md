@@ -6,9 +6,12 @@ For comparison, you can switch this so it is using NSwag as a generator instead.
 
 ## Transformer 
 
-### Nullability transformer
+### Nullability transformer(s)
 
-Fixes nullability. Sets it wherever it applies.
+Fixes nullability. Sets it wherever it applies. Both on operations and on schemas.
+
+By default, the .NET Open API seems to create distinct schemas based on nullability, resulting in multiple schemas for the same .NET type.
+So goes through all schemas and sets ``nullable: false``.
 
 ### Inheritance transformer
 
@@ -37,12 +40,6 @@ Should also look into applying extension in aiding NJsonSchema.
 ### ApplyDescriptionTransformer
 
 Extracts the description from the ``DescriptionAttribute`` of a type, and sets ``description: <value>`` on the corresponding schema.
-
-### ApplySchemasNotDistinctByNullability
-
-By default, the .NET Open API seems to create distinct schemas based on nullability, resulting in multiple schemas for the same .NET type.
-
-This transformer just go through all schemas and sets ``nullable: false``.
 
 ## Issues
 
