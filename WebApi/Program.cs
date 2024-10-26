@@ -11,6 +11,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddSwaggerDocument(settings => settings.SchemaSettings.SchemaType = NJsonSchema.SchemaType.OpenApi3);
+
+/*
 builder.Services.AddOpenApi(options =>
             {
                 options.ApplyServersTransformer();
@@ -21,6 +24,7 @@ builder.Services.AddOpenApi(options =>
                 options.ApplySchemasNotDistinctByNullability();
                 options.ApplyInheritanceTransformer();
             });
+*/
 
 var app = builder.Build();
 
@@ -29,9 +33,24 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 //app.MapOpenApi();
-app.MapOpenApiYaml();
+//app.MapOpenApiYaml();
+
+app.UseOpenApi(x => x.Path = "/openapi/{documentName}.yaml");
 
 if (app.Environment.IsDevelopment())
+{
+    UseSwaggerUi(app);
+
+    //MapScalar(app);
+}
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+static void MapScalar(WebApplication app)
 {
     app.MapScalarApiReference(x =>
     {
@@ -41,8 +60,11 @@ if (app.Environment.IsDevelopment())
     app.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescription();
 }
 
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+static void UseSwaggerUi(WebApplication app)
+{
+    app.UseSwaggerUi(x =>
+    {
+        x.Path = "/openapi";
+        x.DocumentPath = "/openapi/{documentName}.yaml";
+    });
+}

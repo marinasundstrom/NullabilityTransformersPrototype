@@ -1,0 +1,241 @@
+﻿x-generator: NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))
+openapi: 3.0.0
+info:
+  title: My Title
+  version: 1.0.0
+servers:
+  - url: http://localhost:5295
+paths:
+  /Test/Test:
+    get:
+      tags:
+        - Test
+      operationId: Test_Test
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TestDto"
+  /Test/Test2:
+    get:
+      tags:
+        - Test
+      operationId: Test_Test2
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TestDto"
+  /Test/Test3:
+    get:
+      tags:
+        - Test
+      operationId: Test_Test3
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeyValuePairOfIntegerAndTestDto"
+  /Test/Test32:
+    get:
+      tags:
+        - Test
+      operationId: Test_Test32
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeyValuePairOfIntegerAndTestDto"
+  /Test/T1:
+    post:
+      tags:
+        - Test
+      operationId: Test_T1
+      requestBody:
+        x-name: testDto
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestDto"
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ""
+  /Test/T2:
+    post:
+      tags:
+        - Test
+      operationId: Test_T2
+      requestBody:
+        x-name: testDto
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestDto"
+        x-position: 1
+      responses:
+        200:
+          description: ""
+  /Test/T3:
+    post:
+      tags:
+        - Test
+      operationId: Test_T3
+      parameters:
+        - name: x
+          in: query
+          schema:
+            type: integer
+            format: int32
+          x-position: 2
+      requestBody:
+        x-name: testDto
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestDto"
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ""
+  /Test/T4:
+    post:
+      tags:
+        - Test
+      operationId: Test_T4
+      parameters:
+        - name: x
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 2
+          x-position: 2
+      requestBody:
+        x-name: testDto
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestDto"
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ""
+  /Test/T5:
+    post:
+      tags:
+        - Test
+      operationId: Test_T5
+      parameters:
+        - name: x
+          in: query
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+          x-position: 2
+      requestBody:
+        x-name: testDto
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestDto"
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ""
+  /Test/GetAnimal:
+    get:
+      tags:
+        - Test
+      operationId: Test_GetAnimal
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Animal"
+  /Test/PostAnimal:
+    post:
+      tags:
+        - Test
+      operationId: Test_PostAnimal
+      requestBody:
+        x-name: animal
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Animal"
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ""
+components:
+  schemas:
+    TestDto:
+      type: object
+      description: This is a test type
+      additionalProperties: false
+      properties:
+        x:
+          type: string
+        z:
+          type: integer
+          format: int32
+          nullable: true
+        y:
+          type: string
+          nullable: true
+    KeyValuePairOfIntegerAndTestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: integer
+          format: int32
+        value:
+          $ref: "#/components/schemas/TestDto"
+    Animal:
+      type: object
+      discriminator:
+        propertyName: species
+        mapping:
+          Dog: "#/components/schemas/Dog"
+          Cat: "#/components/schemas/Cat"
+      x-abstract: true
+      additionalProperties: false
+      required:
+        - species
+      properties:
+        species:
+          type: string
+    Dog:
+      allOf:
+        - $ref: "#/components/schemas/Animal"
+        - type: object
+          additionalProperties: false
+          properties:
+            foo:
+              type: boolean
+    Cat:
+      allOf:
+        - $ref: "#/components/schemas/Animal"
+        - type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string

@@ -22,7 +22,13 @@ public class TestController : ControllerBase
     }
 
     [HttpGet("Test3")]
-    public KeyValuePair<TestDto, int> Test3()
+    public KeyValuePair<int, TestDto> Test3()
+    {
+        return default!;
+    }
+
+    [HttpGet("Test32")]
+    public KeyValuePair<int, TestDto?> Test32()
     {
         return default!;
     }
@@ -66,7 +72,7 @@ public class TestController : ControllerBase
 }
 
 [Description("This is a test type")]
-public record TestDto(string x);
+public record TestDto(string x, int? z, string? y);
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "species")]
 [JsonDerivedType(typeof(Dog), "Dog")]

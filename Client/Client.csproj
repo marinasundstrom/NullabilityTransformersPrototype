@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger.yaml"
+    <OpenApiReference Include="OpenAPIs\v1.yaml"
       Options="/JsonLibrary:SystemTextJson /UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true"
       Namespace="NullabilityTransformersPrototype">
       <SourceUri>https://localhost:5001/openapi/v1/openapi.yaml</SourceUri>
