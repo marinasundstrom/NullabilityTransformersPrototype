@@ -21,7 +21,8 @@ public static class Transformers
 
     public static OpenApiOptions ApplyNullabilityTransformer(this OpenApiOptions options)
     {
-        options.AddOperationTransformer<NullabilityTransformer>();
+        options.AddSchemaTransformer<SchemaNullabilityTransformer>();
+        options.AddOperationTransformer<OperationNullabilityTransformer>();
         return options;
     }
 
@@ -150,19 +151,6 @@ public static class Transformers
             var clrType = context.JsonTypeInfo.Type;
 
             schema.Description = clrType.GetCustomAttributes<DescriptionAttribute>().FirstOrDefault()?.Description;
-
-            return Task.CompletedTask;
-        });
-
-        return options;
-    }
-
-    public static OpenApiOptions ApplySchemasNotDistinctByNullability(this OpenApiOptions options)
-    {
-        options.AddSchemaTransformer((schema, context, ct) =>
-        {
-            // Schemas should never be nullable
-            schema.Nullable = false;
 
             return Task.CompletedTask;
         });

@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 
 namespace NullabilityTransformersPrototype.Extensions;
 
-public class NullabilityTransformer : IOpenApiOperationTransformer
+public class OperationNullabilityTransformer : IOpenApiOperationTransformer
 {
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {
