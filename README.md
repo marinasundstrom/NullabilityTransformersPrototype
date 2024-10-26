@@ -2,6 +2,8 @@
 
 These transformers are prototypes for a potential compat shim for NSwag, and Swashbuckle. Dealing with essential things that would be a deal breaker for migrating to the new infrastructure.
 
+For comparison, you can switch this so it is using NSwag as a generator instead.
+
 ## Transformer 
 
 ### Nullability transformer
