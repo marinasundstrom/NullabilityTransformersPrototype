@@ -58,6 +58,7 @@ components:
           Dog: "#/components/schemas/Dog"
           Cat: "#/components/schemas/Cat"
       x-abstract: true
+      additionalProperties: false
     Cat:
       allOf:
         - $ref: "#/components/schemas/Animal"

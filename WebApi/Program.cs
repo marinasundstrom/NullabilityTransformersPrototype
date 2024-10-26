@@ -16,13 +16,13 @@ builder.Services.AddSwaggerDocument(settings => settings.SchemaSettings.SchemaTy
 /*
 builder.Services.AddOpenApi(options =>
             {
-                options.ApplyServersTransformer();
-                options.ApplyOperationId();
-                options.ApplyNullabilityTransformer();
-                options.ApplyDescriptionTransformer();
-                options.ApplySchemaNameTransforms(TypeExtensions.GetSchemaName);
-                options.ApplySchemasNotDistinctByNullability();
-                options.ApplyInheritanceTransformer();
+                // options.ApplyServersTransformer();
+                // options.ApplyOperationId();
+                // options.ApplyNullabilityTransformer();
+                // options.ApplyDescriptionTransformer();
+                // options.ApplySchemaNameTransforms(TypeExtensions.GetSchemaName);
+                // options.ApplySchemasNotDistinctByNullability();
+                // options.ApplyInheritanceTransformer();
             });
 */
 
@@ -32,7 +32,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-//app.MapOpenApi();
+////app.MapOpenApi();
 //app.MapOpenApiYaml();
 
 app.UseOpenApi(x => x.Path = "/openapi/{documentName}.yaml");
@@ -65,6 +65,6 @@ static void UseSwaggerUi(WebApplication app)
     app.UseSwaggerUi(x =>
     {
         x.Path = "/openapi";
-        x.DocumentPath = "/openapi/{documentName}.yaml";
+        x.DocumentPath = "/openapi/v1.yaml";
     });
 }

@@ -40,6 +40,8 @@ public static class Transformers
                     baseSchema.Extensions.Add("x-abstract", new OpenApiBoolean(true));
                 }
 
+                baseSchema.AdditionalPropertiesAllowed = false;
+
                 var discriminatorPropertyName = baseSchema.Discriminator.PropertyName;
 
                 var baseSchemaName = baseSchema.Annotations[SchemaId].ToString()!;
@@ -48,6 +50,8 @@ public static class Transformers
 
                 foreach (var subSchema in subSchemas)
                 {
+                    // INFO: This doesn't work since the names are modified after the transformers have run.
+
                     /*
                     var subSchemaName = subSchema.Annotations[SchemaId].ToString()!;
                     var newName = subSchemaName.Replace(baseSchemaName, string.Empty);
@@ -60,6 +64,7 @@ public static class Transformers
 
                     allOfSchema.Type = "object";
                     allOfSchema.Properties.Remove(discriminatorPropertyName);
+                    allOfSchema.AdditionalPropertiesAllowed = false;
 
                     var refSchema = new OpenApiSchema();
 
@@ -76,9 +81,13 @@ public static class Transformers
                     subSchema.Properties.Clear();
                 }
 
+                // INFO: If you do this, which you logically would have done. The sub-schemas disappear.
+
                 //schema.AnyOf.Clear();
 
                 /*
+                // Re-mapping schemas in binding
+
                 foreach (var (mappingKey, schemaRef) in baseSchema.Discriminator.Mapping.ToList())
                 {
                     var newName = schemaRef.Replace(baseSchemaName, string.Empty);
@@ -126,9 +135,6 @@ public static class Transformers
                 var clrType = context.JsonTypeInfo.Type;
                 newSchemaId = transformer(clrType);
                 schema.Annotations[SchemaId] = newSchemaId;
-
-                // Schemas should never be nullable
-                schema.Nullable = false;
             }
 
             return Task.CompletedTask;
@@ -155,6 +161,7 @@ public static class Transformers
     {
         options.AddSchemaTransformer((schema, context, ct) =>
         {
+            // Schemas should never be nullable
             schema.Nullable = false;
 
             return Task.CompletedTask;
